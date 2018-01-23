@@ -6,7 +6,7 @@ def getWishes(uid, body):
    message = 'Текущие пожелания: '
    message += str(len(wish.wishes))
    #attachment = 'photo' + str(group_id) + '_' + str(photo)
-   return message, attachment
+   return message, ''
 
 cat_command = command_system.Command()
 

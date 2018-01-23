@@ -9,7 +9,7 @@ def addWish(uid, body):
 	if message is 1:
 		message = "Твои пожелания записаны :)"
 
-	return message, attachment
+	return message, ''
 
 cat_command = command_system.Command()
 
