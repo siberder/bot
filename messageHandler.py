@@ -38,12 +38,13 @@ def load_modules():
 def get_answer(user_id, body):
    message = "Прости, не понимаю тебя. Напиши 'помощь', чтобы узнать мои команды"
    attachment = ''
-   distance = len(body)
+   cword = body[0]
+   distance = len(cword)
    command = None
    key = ''
    for c in command_list:
        for k in c.keys:
-           d = damerau_levenshtein_distance(body.lower(), k)
+           d = damerau_levenshtein_distance(cword.lower(), k)
            if d < distance:
                distance = d
                command = c
@@ -51,7 +52,7 @@ def get_answer(user_id, body):
                if distance == 0:
                    message, attachment = c.process(user_id, body)
                    return message, attachment
-   if distance < len(body)*0.4:
+   if distance < len(cword)*0.4:
        message, attachment = command.process(user_id, body)
        message = 'Я понял ваш запрос как "%s"\n\n' % key + message
    return message, attachment
