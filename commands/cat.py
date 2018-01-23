@@ -2,7 +2,7 @@ import command_system
 import vkapi
 
 
-def cat():
+def cat(uid, body):
    # Получаем случайную картинку из пабли
    attachment = vkapi.get_random_wall_picture(-32015300)
    message = 'Вот тебе котик :)\nВ следующий раз я пришлю другого котика.'

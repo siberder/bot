@@ -35,7 +35,7 @@ def load_modules():
        importlib.import_module("commands." + m[0:-3])
 
 
-def get_answer(body):
+def get_answer(user_id, body):
    message = "Прости, не понимаю тебя. Напиши 'помощь', чтобы узнать мои команды"
    attachment = ''
    distance = len(body)
@@ -43,16 +43,16 @@ def get_answer(body):
    key = ''
    for c in command_list:
        for k in c.keys:
-           d = damerau_levenshtein_distance(body, k)
+           d = damerau_levenshtein_distance(body.lower(), k)
            if d < distance:
                distance = d
                command = c
                key = k
                if distance == 0:
-                   message, attachment = c.process()
+                   message, attachment = c.process(user_id, body)
                    return message, attachment
    if distance < len(body)*0.4:
-       message, attachment = command.process()
+       message, attachment = command.process(user_id, body)
        message = 'Я понял ваш запрос как "%s"\n\n' % key + message
    return message, attachment
 
@@ -61,6 +61,6 @@ def get_answer(body):
 def create_answer(data, token):
    load_modules()
    user_id = data['user_id']
-   message, attachment = get_answer(data['body'].lower())
+   message, attachment = get_answer(user_id, data['body'])
    vkapi.send_message(user_id, token, message, attachment)
 
