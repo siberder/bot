@@ -59,8 +59,6 @@ def get_answer(user_id, body):
        message = 'Я понял ваш запрос как "%s"\n\n' % key + message
    return message, attachment
 
-
-
 def create_answer(data, token):
    load_modules()
    user_id = data['user_id']
