@@ -21,9 +21,6 @@ class WishDay:
 		self.startHour = startHour
 		self.endHour = endHour
 
-		if j is not None:
-			self.__dict__ = json.loads(j)
-
 	def __str__(self):
 		return "{0} - {1}".format(self.startHour, self.endHour)
 
