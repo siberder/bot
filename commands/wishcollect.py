@@ -4,10 +4,9 @@ import vkapi
 
 def addWish(uid, body):
 	name = vkapi.getName(uid)   
-	message = wish.addWish(name, uid, body)
+	newWish = wish.addWish(name, uid, body)
 
-	if message is 1:
-		message = "Твои пожелания записаны :)"
+	message = "Твои пожелания записаны :)\n" + str(newWish)
 
 	return message, ''
 

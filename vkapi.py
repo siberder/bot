@@ -1,8 +1,9 @@
 import vk
 import random
 import requests
+import settings
 
-session = vk.Session()
+session = vk.Session(settings.token)
 api = vk.API(session, v=5.0)
 
 
@@ -15,8 +16,11 @@ def get_random_wall_picture(group_id):
 
 def upload_document(user_id, document):
 	url = api.docs.getMessagesUploadServer(type="doc", peer_id=user_id)
-	# requests.post(url, data={"file": })
 
+	myfile = {"file": ("wishes.html", document)}
+
+
+	requests.post(url, data=myfile)
 
 def send_message(user_id, token, message, attachment=""):
     api.messages.send(access_token=token, user_id=str(user_id), message=message, attachment=attachment)

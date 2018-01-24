@@ -125,15 +125,20 @@ def addWish(name, uid, text):
 	wishes.append(wish)
 	saveWishes(wishPath, wishes)
 
-	return 1
+	generateWishesHTML(wishes)
 
-def getWishes(uid, nextWeek = False):
-	if nextWeek:
-		return [x for x in wishes if x.uid == uid and x.weekStart == getNextTue()]
-	else:
-		return [x for x in wishes if x.uid == uid and x.weekStart == getCurTue()]	
+	return wish
 
-	return userWishes
+def getWishes(uid = -1, weekStart = None):
+	if weekStart is None:
+		weekStart = getCurTue()
+
+	filtered = [x for x in wishes if x.weekStart == weekStart]
+
+	if uid > 0:
+		filtered = [x for x in filtered if x.uid == uid]
+
+	return filtered
 
 def addFakeWishes(count):
 	for x in range(0, count):
@@ -190,7 +195,18 @@ def generateWishesHTML(wsh):
 				with tag("td"):
 					text(w.comment)
 
-	return doc.getvalue()
+	rdyDoc = doc.getvalue()
+
+	with open("wishes.html", "w+") as f:
+		f.write(rdyDoc)
+
+	return rdyDoc
+	
+def getWishesHTML():
+	try:
+		return open("wishes.html", "rb")
+	except:
+		generateWishesHTML(wishes)
 
 wishPath = "wishes.json"
 
