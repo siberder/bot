@@ -5,9 +5,10 @@ import vkapi
 def getWishes(uid, body):
    message = 'Текущие пожелания: '
    message += str(len(wish.wishes))
-   wishesDoc = wish.generateWishesHTML(wish.wishes)
+   wishesDoc = wish.getWishesReport(wish.wishes)
+   attachment = vkapi.upload_document(uid, wishesDoc)
    #attachment = 'photo' + str(group_id) + '_' + str(photo)
-   return message, ''
+   return message, attachment
 
 cat_command = command_system.Command()
 

@@ -1,5 +1,6 @@
 import jsonpickle
 import datetime
+import pdfkit
 from yattag import Doc
 
 
@@ -118,14 +119,14 @@ def getTestWish():
 		return f.read()
 
 def addWish(name, uid, text):
+	print("Adding wish of {0} ({1})".format(name, str(uid)))
+
 	wish = getWishDaysFromText(text)
 	wish.name = name
 	wish.uid = uid
 	
 	wishes.append(wish)
 	saveWishes(wishPath, wishes)
-
-	generateWishesHTML(wishes)
 
 	return wish
 
@@ -141,10 +142,14 @@ def getWishes(uid = -1, weekStart = None):
 	return filtered
 
 def addFakeWishes(count):
+	print("Adding %s fake wishes" % count)
+
 	for x in range(0, count):
 		addWish("Name Surname", count, getTestWish())
 
 def generateWishesHTML(wsh):
+	print("Generating wishes HTML..")
+
 	doc, tag, text = Doc().tagtext()
 
 	with tag('h1'):
@@ -197,16 +202,39 @@ def generateWishesHTML(wsh):
 
 	rdyDoc = doc.getvalue()
 
-	with open("wishes.html", "w+") as f:
+	with open("lastwishes.html", "w+") as f:
 		f.write(rdyDoc)
 
-	return rdyDoc
-	
-def getWishesHTML():
+	return rdyDoc	
+
+def getWishesHTMLFile():
 	try:
 		return open("wishes.html", "rb")
-	except:
+	except FileNotFoundError:
 		generateWishesHTML(wishes)
+		getWishesHTML()
+
+def generateWishesPDF(htmlstring):
+	path = 'wishes.pdf'
+	pdfkit.from_string(htmlstring, path) 
+	return open(path, "rb")
+
+def getWishesPDFFile():
+	try:
+		return open("wishes.pdf", "rb")
+	except FileNotFoundError:
+		generateWishesPDF(getWishesHTMLFile())
+		getWishesHTML()
+
+def getWishesReport(wishes):
+	try:
+		html = generateWishesHTML(wishes)
+
+		pdfRB = generateWishesPDF(html)
+	except:
+		return getWishesPDFFile()
+
+	return pdfRB
 
 wishPath = "wishes.json"
 

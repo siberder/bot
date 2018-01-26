@@ -15,12 +15,17 @@ def get_random_wall_picture(group_id):
     return attachment
 
 def upload_document(user_id, document):
-	url = api.docs.getMessagesUploadServer(type="doc", peer_id=user_id)
+	url = api.docs.getMessagesUploadServer(type="doc", peer_id=user_id)["upload_url"]
 
-	myfile = {"file": ("wishes.html", document)}
+	uploadedFile = requests.post(url, files={"file": document}).json()["file"]
+	
+	resp = api.docs.save(file=uploadedFile, title="Wishes.pdf")
 
+	if "error" in resp:
+		return ""
 
-	requests.post(url, data=myfile)
+	return "doc{0}_{1}".format(resp["owner_id"], resp["id"])
+
 
 def send_message(user_id, token, message, attachment=""):
     api.messages.send(access_token=token, user_id=str(user_id), message=message, attachment=attachment)
@@ -28,3 +33,13 @@ def send_message(user_id, token, message, attachment=""):
 def getName(uid):
 	data = api.users.get(user_id=uid)[0]
 	return data["first_name"] + " " + data["last_name"]
+
+
+import wish
+
+uid = 53635578
+
+# updoc = upload_document(uid, wish.getWishesHTML())
+
+# print(updoc.text)
+#send_message(uid, settings.token, )
