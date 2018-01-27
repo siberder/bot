@@ -16,7 +16,7 @@ def getWishes(uid, body):
 	if wishesDate is not None:
 		message += str(wishesDate)
 	else:
-		message += str(wish.getCurTue().strptime(matches, "%d.%m.%Y"))	
+		message += str(wish.getCurTue().strftime("%d.%m.%Y"))	
 
 	wishesDoc = wishreporter.getWishesReport(curWishes)
 
