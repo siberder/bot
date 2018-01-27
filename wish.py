@@ -104,7 +104,7 @@ def getCurTue():
 
 def getExactWeekStart(curdate):
 	date = curdate + datetime.timedelta(days = - curdate.weekday() + settings.wishesStartWeekday)
-	return date.strftime("%d.%m.%Y") # days in week - current day in week + tuesday
+	return date # days in week - current day in week + tuesday
 
 def getDayHoursFromString(text):
 	hours = text.strip(" ").split("-")
