@@ -21,6 +21,8 @@ def upload_document(user_id, document):
 	
 	resp = api.docs.save(file=uploadedFile, title="Wishes.pdf")
 
+	print(resp)
+
 	if "error" in resp:
 		return ""
 
