@@ -15,11 +15,11 @@ def get_random_wall_picture(group_id):
     return attachment
 
 def upload_document(user_id, document):
-	url = api.docs.getMessagesUploadServer(type="doc", peer_id=user_id)["upload_url"]
+	url = api.docs.getMessagesUploadServer(access_token=settings.token, type="doc", peer_id=user_id)["upload_url"]
 
 	uploadedFile = requests.post(url, files={"file": document}).json()["file"]
 	
-	resp = api.docs.save(file=uploadedFile, title="Wishes.pdf")
+	resp = api.docs.save(access_token=settings.token, file=uploadedFile, title="Wishes.pdf")
 
 	print(resp)
 
