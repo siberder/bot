@@ -6,16 +6,17 @@ import re
 from datetime import datetime
 
 def getWishes(uid, body):
-	message = 'Текущие пожелания: '
-	message += str(len(wish.wishes))
-
 	wishesDate = getDateFromText(body)
-	if wishesDate is not None:
-		message += "\nДата: " + str(wishesDate)
-	else:
-		message += "\nДата: " + str(wish.getCurTue())
-
 	curWishes = wish.getWishes(weekStart = wishesDate)
+
+	message = 'Текущие пожелания: '
+	message += str(len(curWishes))
+
+	message += "\nДата начала рабочей недели: "
+	if wishesDate is not None:
+		message += str(wishesDate)
+	else:
+		message += str(wish.getCurTue().strptime(matches, "%d.%m.%Y"))	
 
 	wishesDoc = wishreporter.getWishesReport(curWishes)
 
