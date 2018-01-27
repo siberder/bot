@@ -1,6 +1,6 @@
 import jsonpickle
 import datetime
-import pdfkit
+from weasyprint import HTML
 from yattag import Doc
 
 
@@ -154,55 +154,40 @@ def generateWishesHTML(wsh):
 
 	doc, tag, text = Doc().tagtext()
 
-	with tag('h1'):
-		text("Пожелания")
+	doc.asis('<!DOCTYPE html>')
 
-	with tag('table'):
-		with tag('tr'):
-			with tag('th'):
-				text("Имя")
+	with tag('head'):
+		doc.asis('<meta charset=utf-8>')
 
-			with tag('th'):
-				text("Вторник")
+	with tag('body'):
+		with tag('h1'):
+			text("Пожелания")
 
-			with tag('th'):
-				text("Среда")
+		with tag('table'):
+			with tag('tr'):
+				headrows = ["Имя", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье", "Понедельник", "Комментарий"]
 
-			with tag('th'):
-				text("Четверг")
+				for hrow in headrows:
+					with tag('th'):
+						text(hrow)
 
-			with tag('th'):
-				text("Пятница")
-
-			with tag('th'):
-				text("Суббота")
-
-			with tag('th'):
-				text("Воскресенье")
-
-			with tag('th'):
-				text("Понедельник")
-
-			with tag('th'):
-				text("Комментарий")
-
-		with tag("tr"):
-			pass
-
-		for w in wsh:
 			with tag("tr"):
-				with tag("td"):
-					text(w.name)
+				pass
 
-				for x in range(0, 7):
-					daysInWish = len(w.days)
+			for w in wsh:
+				with tag("tr"):
+					with tag("td"):
+						text(w.name)
+
+					for x in range(0, 7):
+						daysInWish = len(w.days)
+
+						with tag("td"):
+							if x < daysInWish and w.days[x] is not None:
+								text(str(w.days[x]))
 
 					with tag("td"):
-						if x < daysInWish and w.days[x] is not None:
-							text(str(w.days[x]))
-
-				with tag("td"):
-					text(w.comment)
+						text(w.comment)
 
 	rdyDoc = doc.getvalue()
 
@@ -216,13 +201,14 @@ def getWishesHTMLFile():
 		return open("wishes.html", "rb")
 	except FileNotFoundError:
 		generateWishesHTML(wishes)
-		getWishesHTML()
+		getWishesHTMLFile()
 
 def generateWishesPDF(htmlstring):
 	print("Generating wishes PDF..")
 
 	path = 'wishes.pdf'
-	pdfkit.from_string(htmlstring, path) 
+	# pdfkit.from_string(htmlstring, path) 
+	HTML(string=htmlstring).write_pdf(path)
 	return open(path, "rb")
 
 def getWishesPDFFile():
@@ -230,7 +216,7 @@ def getWishesPDFFile():
 		return open("wishes.pdf", "rb")
 	except FileNotFoundError:
 		generateWishesPDF(getWishesHTMLFile())
-		getWishesHTML()
+		getWishesPDFFile()
 
 def getWishesReport(wishes):
 	print("Getting wishes report..")

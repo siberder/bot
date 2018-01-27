@@ -35,13 +35,3 @@ def send_message(user_id, token, message, attachment=""):
 def getName(uid):
 	data = api.users.get(user_id=uid)[0]
 	return data["first_name"] + " " + data["last_name"]
-
-
-import wish
-
-uid = 53635578
-
-# updoc = upload_document(uid, wish.getWishesHTML())
-
-# print(updoc.text)
-#send_message(uid, settings.token, )
