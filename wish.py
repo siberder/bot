@@ -1,5 +1,6 @@
 import jsonpickle
 import datetime
+import settings
 
 class WishDayHours:
 	anyhours = ["Any", "any"]
@@ -14,13 +15,42 @@ class WishDayHours:
 class WishDay:
 	startHour = None
 	endHour = None
+	date = None
 
-	def __init__(self, startHour = None, endHour = None):
+	def __init__(self, startHour = None, endHour = None, date = None, text = None):
 		self.startHour = startHour
 		self.endHour = endHour
+		self.date = date
+
+		if text is not None:
+			setHoursFromString(text) 
 
 	def __str__(self):
+		if self.startHour is None or self.endHour is None:
+			return "Ошибка в записи"
+
+		if self.startHour == self.endHour:
+			return(self.startHour)
+
 		return "{0} - {1}".format(self.startHour, self.endHour)
+
+	def setHoursFromString(self, text):
+		if len(hours) > 1:
+			if WishDayHours.checkAny(hours[0]):
+				self.startHour = WishDayHours.anyhours[0]
+			else:
+				self.startHour = hours[0]
+
+			if WishDayHours.checkAny(hours[1]):
+				self.endHour = WishDayHours.anyhours[0]
+			else:
+				self.endHour = hours[1]
+		elif WishDayHours.checkAny(text):
+			self.startHour = WishDayHours.anyhours[0]
+			self.endHour = WishDayHours.anyhours[0]
+		elif WishDayHours.checkOff(text):
+			self.startHour = WishDayHours.off[0]
+			self.endHour = WishDayHours.off[0]
 
 class Wish:
 	def __init__(self):
@@ -60,12 +90,20 @@ def saveWishes(path, wishes):
 			open(path, 'w+')
 
 def getNextTue():
-	curdate = datetime.date.today()
-	return curdate + datetime.timedelta(days = 7 - curdate.weekday() + 1) # Max days in week - current day in week + tuesday number
+	curTue = getCurTue()
+	return curTue + datetime.timedelta(days = 7 - curTue.weekday()  + settings.wishesStartWeekday) # days in week - current day in week + tuesday
 
 def getCurTue():
-	curdate = datetime.date.today()	
-	return curdate + datetime.timedelta(days = - curdate.weekday() + 1) # Max days in week - current day in week + tuesday number
+	curdate = datetime.date.today()
+
+	# If we are above wed, we have to leave wishes to next week
+	if curdate.weekday() > settings.wishesDeadlineWeekday:
+		curdate += datetime.timedelta(days = 7)
+
+	return getExactWeekStart(curdate)
+
+def getExactWeekStart(curdate):
+	return curdate + datetime.timedelta(days = - curdate.weekday() + settings.wishesStartWeekday) # days in week - current day in week + tuesday
 
 def getDayHoursFromString(text):
 	hours = text.strip(" ").split("-")
