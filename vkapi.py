@@ -19,7 +19,7 @@ def upload_document(user_id, document):
 
 	uploadedFile = requests.post(url, files={"file": document}).json()["file"]
 	
-	resp = api.docs.save(access_token=settings.token, file=uploadedFile, title="Wishes.pdf")
+	resp = api.docs.save(access_token=settings.token, file=uploadedFile, title="Wishes.pdf")[0]
 
 	print(resp)
 
