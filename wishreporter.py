@@ -25,6 +25,10 @@ def generateWishesHTML(wsh):
 		with tag('h1'):
 			text("Пожелания")
 
+		with tag('h3'):
+			if len(wsh) > 0:
+				text(wsh[0].weekStart.strftime("%d.%m.%Y"))
+
 		with tag('table'):
 			with tag('tr'):
 				headrows = ["Имя", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье", "Понедельник", "Комментарий"]

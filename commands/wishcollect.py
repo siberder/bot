@@ -10,8 +10,8 @@ def addWish(uid, body):
 
 	return message, ''
 
-cat_command = command_system.Command()
+command = command_system.Command()
 
-cat_command.keys = ['пожелания', 'пожелания\n', 'пожелашки']
-cat_command.description = 'Запишу твои пожелания'
-cat_command.process = addWish
+command.keys = ['пожелания', 'пожелания\n', 'пожелашки']
+command.description = 'Запишу твои пожелания'
+command.process = addWish
