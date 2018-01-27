@@ -66,10 +66,10 @@ def getWishesHTMLFile():
 		getWishesHTMLFile()
 
 def generateWishesPDF(htmlstring):
-	print("Generating wishes PDF..")
+	print("Generating wishes PDF, html string length: " + str(len(htmlstring)))
 
 	path = 'wishes.pdf'
-	# pdfkit.from_string(htmlstring, path) 
+	
 	html = HTML(string=htmlstring)
 	css = CSS(filename="style.css")
 	html.write_pdf(path, stylesheets=[css])

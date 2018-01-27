@@ -12,6 +12,6 @@ def addWish(uid, body):
 
 cat_command = command_system.Command()
 
-cat_command.keys = ['пожелания', 'пожелашки']
+cat_command.keys = ['пожелания', 'пожелания\n', 'пожелашки']
 cat_command.description = 'Запишу твои пожелания'
 cat_command.process = addWish
