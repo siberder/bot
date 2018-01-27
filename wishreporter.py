@@ -63,7 +63,7 @@ def generateWishesPDF(htmlstring):
 	# pdfkit.from_string(htmlstring, path) 
 	html = HTML(string=htmlstring)
 	css = CSS(filename="style.css")
-	html.write_pdf(path)
+	html.write_pdf(path, stylesheets=[css])
 	return open(path, "rb")
 
 def getWishesPDFFile():
