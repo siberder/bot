@@ -33,5 +33,5 @@ def send_message(user_id, token, message, attachment=""):
     api.messages.send(access_token=token, user_id=str(user_id), message=message, attachment=attachment)
 
 def getName(uid):
-	data = api.users.get(user_id=uid)[0]
+	data = api.users.get(user_id=uid, lang="ru")[0]
 	return data["first_name"] + " " + data["last_name"]
