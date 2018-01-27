@@ -3,7 +3,7 @@ import random
 import requests
 import settings
 
-session = vk.Session(settings.token)
+session = vk.Session()
 api = vk.API(session, v=5.0)
 
 
