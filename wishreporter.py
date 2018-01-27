@@ -90,5 +90,6 @@ def getWishesReport(wishes):
 
 		pdfRB = generateWishesPDF(html)
 		return pdfRB
-	except:
-		return getWishesPDFFile()
+	except Exception as e:
+		print(e)
+		return None

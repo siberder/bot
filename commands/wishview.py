@@ -8,7 +8,13 @@ def getWishes(uid, body):
    message += str(len(wish.wishes))
 
    wishesDoc = wishreporter.getWishesReport(wish.wishes)
-   attachment = vkapi.upload_document(uid, wishesDoc)
+
+   attachment = ''
+
+   if wishesDoc is None:
+   	message += "\nЧто-то пошло не так, и документ с пожеланиями не сохранился. Спросите у Влада. Или Господа-бога. Хотя какая разница."
+   else:
+   	attachment = vkapi.upload_document(uid, wishesDoc)
 
    return message, attachment
 
