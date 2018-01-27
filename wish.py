@@ -231,10 +231,10 @@ def getWishesReport(wishes):
 		html = generateWishesHTML(wishes)
 
 		pdfRB = generateWishesPDF(html)
+		return pdfRB
 	except:
 		return getWishesPDFFile()
-
-	return pdfRB
+	
 
 wishPath = "wishes.json"
 
