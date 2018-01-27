@@ -19,7 +19,7 @@ def generateWishesHTML(wsh):
 		doc.asis('<meta charset=utf-8>')
 		
 		with tag('style'):
-			doc.asis(getDocumentText("style.css"))
+			doc.text(getDocumentText("style.css"))
 
 	with tag('body'):
 		with tag('h1'):
