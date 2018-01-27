@@ -29,6 +29,8 @@ def damerau_levenshtein_distance(s1, s2):
 
 
 def load_modules():
+	print("Loading modules..")
+
 	files = os.listdir("mysite/commands")
 	modules = filter(lambda x: x.endswith('.py'), files)
 	for m in modules:
@@ -36,11 +38,13 @@ def load_modules():
 
 
 def get_answer(user_id, body):
+	print("Message got from " + str(user_id))
+
 	message = "Прости, не понимаю тебя. Напиши 'помощь', чтобы узнать мои команды"
 	attachment = ''
-	print(body)
+	print("Message body: " + body)
 	cword = body.split(" ")[0]
-	print(cword)
+	print("Control word: " + cword)
 	distance = len(cword)
 	command = None
 	key = ''
@@ -60,8 +64,13 @@ def get_answer(user_id, body):
 	return message, attachment
 
 def create_answer(data, token):
+	print("Creating answer..")
+
 	load_modules()
 	user_id = data['user_id']
 	message, attachment = get_answer(user_id, data['body'])
+
+	print("Answer: " + message + "Attachment: " + attachment)
+
 	vkapi.send_message(user_id, token, message, attachment)
 

@@ -45,7 +45,9 @@ class Wish:
 def loadWishes(path):
 	try:
 		with open(path, "r") as f:
-			return jsonpickle.decode(f.read())
+			wsh = jsonpickle.decode(f.read())
+			print(str(len(wsh)) + " wishes loaded")
+			return wsh
 	except Exception as e:
 		if e == FileNotFoundError:
 			open(path, 'w+')
@@ -215,6 +217,8 @@ def getWishesHTMLFile():
 		getWishesHTML()
 
 def generateWishesPDF(htmlstring):
+	print("Generating wishes PDF..")
+
 	path = 'wishes.pdf'
 	pdfkit.from_string(htmlstring, path) 
 	return open(path, "rb")
@@ -227,6 +231,8 @@ def getWishesPDFFile():
 		getWishesHTML()
 
 def getWishesReport(wishes):
+	print("Getting wishes report..")
+
 	try:
 		html = generateWishesHTML(wishes)
 
