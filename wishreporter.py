@@ -71,8 +71,7 @@ def generateWishesPDF(htmlstring):
 	path = 'wishes.pdf'
 	
 	html = HTML(string=htmlstring)
-	css = CSS(filename="style.css")
-	html.write_pdf(path, stylesheets=[css])
+	html.write_pdf(path)
 	return open(path, "rb")
 
 def getWishesPDFFile():
