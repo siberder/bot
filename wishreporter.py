@@ -1,6 +1,13 @@
 from weasyprint import HTML, CSS
 from yattag import Doc
 
+def getDocumentText(path):
+	try:
+		with open(path, "r+") as f:
+			return f.read()
+	except:
+		return ""
+
 def generateWishesHTML(wsh):
 	print("Generating wishes HTML..")
 
@@ -10,7 +17,9 @@ def generateWishesHTML(wsh):
 
 	with tag('head'):
 		doc.asis('<meta charset=utf-8>')
-		doc.asis('<link rel="stylesheet" href="style.css">')
+		
+		with tag('style'):
+			doc.asis(getDocumentText("style.css"))
 
 	with tag('body'):
 		with tag('h1'):
