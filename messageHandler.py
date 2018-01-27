@@ -70,7 +70,7 @@ def create_answer(data, token):
 	user_id = data['user_id']
 	message, attachment = get_answer(user_id, data['body'])
 
-	print("Answer: " + message + "Attachment: " + attachment)
+	print("Answer: " + message + "\nAttachment: " + attachment)
 
 	vkapi.send_message(user_id, token, message, attachment)
 

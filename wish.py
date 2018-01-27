@@ -195,8 +195,10 @@ def generateWishesHTML(wsh):
 					text(w.name)
 
 				for x in range(0, 7):
+					daysInWish = len(w.days)
+
 					with tag("td"):
-						if w.days[x] is not None:
+						if x < daysInWish and w.days[x] is not None:
 							text(str(w.days[x]))
 
 				with tag("td"):
