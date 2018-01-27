@@ -44,7 +44,7 @@ def get_answer(user_id, body):
 	attachment = ''
 	print("Message body: " + body)
 	cword = body.split("\n")
-	cword = cword.split(" ")[0]
+	cword = cword[0].split(" ")[0]
 	print("Control word: " + cword)
 	distance = len(cword)
 	command = None
