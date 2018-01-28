@@ -19,7 +19,7 @@ class WishReport:
 	def __init__(self, allwishes, filter):
 		if filter.date is not None:
 			self.date = filter.date
-			allwishes = [x for x in allwishes if x.weekStart == filter.date.date()]
+			allwishes = [x for x in allwishes if x.weekStart == filter.date]
 
 		if filter.uid > 0:
 			allwishes = [x for x in filtered if x.uid == filter.uid]
