@@ -17,7 +17,7 @@ def getDateFromText(text):
 
 		date = datetime.strptime(matches, "%d.%m.%Y")
 
-		date = date.strftime("%d.%m.%Y")
+		#date = date.strftime("%d.%m.%Y")
 
 		return date
 	except Exception as e:

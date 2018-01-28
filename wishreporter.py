@@ -38,6 +38,7 @@ class WishReport:
 
 		with tag('head'):
 			doc.asis('<meta charset=utf-8>')
+			doc.asis('<link rel=stylesheet href="style.css">')
 
 		with tag('body'):
 			with tag('h1'):

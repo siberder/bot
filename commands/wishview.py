@@ -52,6 +52,9 @@ def getWishes(uid, body):
 
 		return message, attachment
 
+
+	if foundLeftsWords:
+		return "Функция в разработке", ''
 	return 'Ошибка', ''
 
 command = command_system.Command()
