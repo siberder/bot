@@ -68,10 +68,10 @@ class Wish:
 			self.setFromText(text) 
 
 	def __str__(self):
-		pstr = "Пожелания от {0} с {1:%Y-%m-%d} по {2:%Y-%m-%d}\n".format(self.name, self.weekStart, self.weekStart + datetime.timedelta(days = 7))
+		pstr = "Пожелания от {0} с {1:%m-%d-%Y} по {2:%m-%d-%Y}\n".format(self.name, self.weekStart, self.weekStart + datetime.timedelta(days = 7))
 		
 		for i, day in enumerate(self.days):
-			pstr += "[{0:%Y-%m-%d}] {1}\n".format(self.weekStart + datetime.timedelta(days = i), day)
+			pstr += "[{0:%d-%m}] {1}\n".format(day.date, day)
 
 		pstr += "\nКомментарий:\n" + self.comment if self.comment else ""
 		return pstr	
@@ -94,7 +94,7 @@ class Wish:
 		d = 0
 		while i < len(text) and d < 7:
 			if text[i]:	
-				self.days.append(WishDay(text = text[i]))		
+				self.days.append(WishDay(text = text[i], date = self.weekStart + datetime.timedelta(days = d)))
 				d += 1
 
 			i += 1

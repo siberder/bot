@@ -49,6 +49,17 @@ class WishReport:
 
 			with tag('table'):
 				with tag('tr'):
+					with tag('th'):
+						text("")
+
+					for x in range(0, 7):
+						with tag('th'):
+							(self.wishes[0].weekStart + datetime.timedelta(days = x)).strftime("%d.%m.%Y")
+
+					with tag('th'):
+						text("")
+
+				with tag('tr'):
 					headrows = ["Имя", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье", "Понедельник", "Комментарий"]
 
 					for hrow in headrows:
