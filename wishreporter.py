@@ -45,8 +45,7 @@ class WishReport:
 				text("Пожелания")
 
 			with tag('h3'):
-				if self.date is not None:
-					text(self.getDateStr())
+				text(self.getDateStr())
 
 			with tag('table'):
 				with tag('tr'):

@@ -34,8 +34,8 @@ def getWishes(uid, body):
 		message = 'Оставлено пожеланий: ' + str(wishCount)
 
 		message += "\nДата начала рабочей недели: "
-		if wishesDate is not None:
-			message += str(wishesDate)
+		if wreport.date is not None:
+			message += "из репорта: " + str(wreport.getDateStr())
 		else:
 			message += str(utils.getCurTue().strftime("%d.%m.%Y"))	
 
