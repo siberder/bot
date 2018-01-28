@@ -47,7 +47,7 @@ def getCurTue():
 	curdate = date.today()
 
 	# If we are above wed, we have to leave wishes to next week
-	if curdate.weekday() > settings.wishesDeadlineWeekday:
+	if curdate.weekday() < settings.wishesDeadlineWeekday:
 		curdate += timedelta(days = 7)
 
 	return getExactWeekStart(curdate)
