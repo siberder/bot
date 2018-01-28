@@ -92,8 +92,8 @@ class WishReport:
 		return open(path, "rb")
 		# return "itspdf"
 
-	def report(self):
-		print("Generating report..")
+	def reportPDF(self):
+		print("Generating report PDF..")
 
 		try:
 			self.generateWishesHTML()
@@ -107,4 +107,4 @@ def getWishesReport(wishes, filter):
 
 	filteredWishes = WishReport(wishes, filter)
 
-	return filteredWishes.report()
+	return filteredWishes

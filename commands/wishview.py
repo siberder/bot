@@ -25,9 +25,9 @@ def getWishes(uid, body):
 	wishesDate = utils.getDateFromText(body)
 
 	if foundWishesWords:
-		curWishes = wish.getWishes(weekStart = wishesDate)
+		wreport = wishreporter.getWishesReport(wish.wishes, wishreporter.WishFilterSettings(date = wishesDate))
 
-		wishCount = len(curWishes)
+		wishCount = len(wreport.wishes)
 		if wishCount == 0:
 			return "Пожеланий нет.", ''
 
@@ -39,7 +39,7 @@ def getWishes(uid, body):
 		else:
 			message += str(utils.getCurTue().strftime("%d.%m.%Y"))	
 
-		wishesDoc = wishreporter.getWishesReport(curWishes)
+		wishesDoc = wreport.report()
 
 		attachment = ''
 
