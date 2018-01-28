@@ -1,6 +1,5 @@
 from weasyprint import HTML, CSS
 from yattag import Doc
-from datetime import datetime
 import datetime
 
 class WishFilterSettings:
