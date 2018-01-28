@@ -23,6 +23,8 @@ def getWishes(uid, body):
 		return showCommandOptionsText(), ''
 
 	wishesDate = utils.getDateFromText(body)
+	if wishesDate is None:
+		wishesDate = utils.getCurTue()
 
 	if foundWishesWords:
 		wreport = wishreporter.getWishesReport(wish.wishes, wishreporter.WishFilterSettings(date = wishesDate))
