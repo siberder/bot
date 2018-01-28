@@ -124,9 +124,6 @@ def saveWishes(path, wishes):
 def addWish(name, uid, text, date = None):
 	print("Adding wish of {0} ({1})".format(name, str(uid)))
 
-	if date is None:
-		date = utils.getCurTue()
-
 	wish = Wish(name, uid, date, text)
 	
 	isOverwritten = False
