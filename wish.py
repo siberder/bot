@@ -127,7 +127,7 @@ def addWish(name, uid, text, date):
 	wish = Wish(name, uid, date, text)
 	
 	isOverwritten = False
-	matches = [w for w in wishes if w.uid == uid and w.weekStart == date]
+	matches = [w for w in wishes if w.uid == uid and w.weekStart == wish.weekStart]
 	if len(matches) > 0:
 		isOverwritten = True
 		wishes[wishes.index(matches[0])] = wish
