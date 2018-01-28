@@ -39,7 +39,7 @@ def getWishes(uid, body):
 		else:
 			message += str(utils.getCurTue().strftime("%d.%m.%Y"))	
 
-		wishesDoc = wreport.report()
+		wishesDoc = wreport.reportPDF()
 
 		attachment = ''
 
