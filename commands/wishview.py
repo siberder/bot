@@ -2,54 +2,58 @@ import command_system
 import wish
 import wishreporter
 import vkapi
-import re
+import utils
 from datetime import datetime
 
+wishesWords = ["пожелания"]
+leftsWords = ["неоставивших"]
+
+def showCommandOptionsText():
+	msgstr = "Что показывать? Варианты:\n"
+	msgstr += command.keys[0] + " " + wishesWords[0] + "\n"
+	msgstr += command.keys[0] + " " + leftsWords[0] + "\n"
+
+	return msgstr
+
 def getWishes(uid, body):
-	wishesDate = getDateFromText(body)
-	curWishes = wish.getWishes(weekStart = wishesDate)
+	foundWishesWords = (utils.checkWordsInText(body, wishesWords) is not None)
+	foundLeftsWords = (utils.checkWordsInText(body, leftsWords) is not None)
 
-	message = 'Текущие пожелания: '
-	message += str(len(curWishes))
+	if foundWishesWords is False and foundLeftsWords is False:
+		return showCommandOptionsText(), ''
 
-	message += "\nДата начала рабочей недели: "
-	if wishesDate is not None:
-		message += str(wishesDate)
-	else:
-		message += str(wish.getCurTue().strftime("%d.%m.%Y"))	
+	wishesDate = utils.getDateFromText(body)
 
-	wishesDoc = wishreporter.getWishesReport(curWishes)
+	if foundWishesWords:
+		curWishes = wish.getWishes(weekStart = wishesDate)
 
-	attachment = ''
+		wishCount = len(curWishes)
+		if wishCount == 0:
+			return "Пожеланий нет.", ''
 
-	if wishesDoc is None:
-		message += "\nЧто-то пошло не так, и документ с пожеланиями не сохранился. Спросите у Влада. Или Господа-бога. Хотя какая разница."
-	else:
-		attachment = vkapi.upload_document(uid, wishesDoc)
+		message = 'Оставлено пожеланий: ' + str(wishCount)
 
-	return message, attachment
+		message += "\nДата начала рабочей недели: "
+		if wishesDate is not None:
+			message += str(wishesDate)
+		else:
+			message += str(utils.getCurTue().strftime("%d.%m.%Y"))	
 
-def getDateFromText(text):
-	try:
-		datere = re.compile(r'\d+[./:-]\d+[./:-]\d+')
-		matches = datere.findall(text)[0]
+		wishesDoc = wishreporter.getWishesReport(curWishes)
 
-		matches = re.sub(r"[./:-]", ".", matches)
+		attachment = ''
 
-		print(matches)
-		date = datetime.strptime(matches, "%d.%m.%Y")
+		if wishesDoc is None:
+			message += "\nЧто-то пошло не так, и документ с пожеланиями не сохранился. Спросите у Влада. Или Господа-бога. Хотя какая разница."
+		else:
+			attachment = vkapi.upload_document(uid, wishesDoc)
 
-		date = date.strftime("%d.%m.%Y")
+		return message, attachment
 
-		return date
-	except Exception as e:
-		print(e)
-
-		return None
-
+	return 'Ошибка', ''
 
 command = command_system.Command()
 
-command.keys = ['все', 'покажи']
+command.keys = ['покажи', 'показать']
 command.description = 'Покажу пожелания'
 command.process = getWishes

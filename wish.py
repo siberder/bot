@@ -1,6 +1,7 @@
 import jsonpickle
 import datetime
 import settings
+import utils
 
 class WishDayHours:
 	anyhours = ["Any", "any"]
@@ -23,7 +24,7 @@ class WishDay:
 		self.date = date
 
 		if text is not None:
-			setHoursFromString(text) 
+			self.setHoursFromString(text) 
 
 	def __str__(self):
 		if self.startHour is None or self.endHour is None:
@@ -35,6 +36,8 @@ class WishDay:
 		return "{0} - {1}".format(self.startHour, self.endHour)
 
 	def setHoursFromString(self, text):
+		hours = text.strip(" ").split("-")
+
 		if len(hours) > 1:
 			if WishDayHours.checkAny(hours[0]):
 				self.startHour = WishDayHours.anyhours[0]
@@ -53,12 +56,16 @@ class WishDay:
 			self.endHour = WishDayHours.off[0]
 
 class Wish:
-	def __init__(self):
-		self.name = "Unnamed"
-		self.uid = -1
-		self.weekStart = datetime.date.today()
+	def __init__(self, name = "Unnamed", uid = -1, weekStart = None, text = None):
+		self.name = name
+		self.uid = uid
 		self.days = []
 		self.comment = ""
+
+		self.setWeekStart(weekStart, text)
+
+		if text is not None:
+			self.setFromText(text) 
 
 	def __str__(self):
 		pstr = "Пожелания от {0} с {1:%Y-%m-%d} по {2:%Y-%m-%d}\n".format(self.name, self.weekStart, self.weekStart + datetime.timedelta(days = 7))
@@ -67,7 +74,32 @@ class Wish:
 			pstr += "[{0:%Y-%m-%d}] {1}\n".format(self.weekStart + datetime.timedelta(days = i), day)
 
 		pstr += "\nКомментарий:\n" + self.comment if self.comment else ""
-		return pstr		
+		return pstr	
+
+	def setWeekStart(self, date, text):
+		if date is not None:
+			self.weekStart = date
+			return
+
+		text = [x.strip("\n") for x in text.split("\n")]		
+
+		self.weekStart = utils.getDateFromText(text[0])
+		if self.weekStart is None:
+			self.weekStart = utils.getCurTue()
+
+	def setFromText(self, text):
+		text = [x.strip("\n") for x in text.split("\n")]		
+
+		i = 1
+		d = 0
+		while i < len(text) and d < 7:
+			if text[i]:	
+				self.days.append(WishDay(text = text[i]))		
+				d += 1
+
+			i += 1
+
+		self.comment = "\n".join(text[i:])
 
 def loadWishes(path):
 	try:
@@ -89,95 +121,29 @@ def saveWishes(path, wishes):
 		if e == FileNotFoundError:
 			open(path, 'w+')
 
-def getNextTue():
-	curTue = getCurTue()
-	return curTue + datetime.timedelta(days = 7 - curTue.weekday()  + settings.wishesStartWeekday) # days in week - current day in week + tuesday
+def addWish(name, uid, text, date = None):
+	print("Adding wish of {0} ({1})".format(name, str(uid)))
 
-def getCurTue():
-	curdate = datetime.date.today()
+	if date is None:
+		date = utils.getCurTue()
 
-	# If we are above wed, we have to leave wishes to next week
-	if curdate.weekday() > settings.wishesDeadlineWeekday:
-		curdate += datetime.timedelta(days = 7)
+	wish = Wish(name, uid, date, text)
+	
+	isOverwritten = False
+	matches = [w for w in wishes if w.uid == uid and w.weekStart == date]
+	if len(matches) > 0:
+		isOverwritten = True
+		wishes[wishes.index(matches[0])] = wish
+	else:
+		wishes.append(wish)
 
-	return getExactWeekStart(curdate)
+	saveWishes(wishPath, wishes)
 
-def getExactWeekStart(curdate):
-	date = curdate + datetime.timedelta(days = - curdate.weekday() + settings.wishesStartWeekday)
-	return date # days in week - current day in week + tuesday
-
-def getDayHoursFromString(text):
-	hours = text.strip(" ").split("-")
-
-	day = WishDay()
-
-	if len(hours) > 1:
-		if WishDayHours.checkAny(hours[0]):
-			day.startHour = WishDayHours.anyhours[0]
-		else:
-			day.startHour = hours[0]
-
-		if WishDayHours.checkAny(hours[1]):
-			day.endHour = WishDayHours.anyhours[0]
-		else:
-			day.endHour = hours[1]
-	elif WishDayHours.checkAny(text):
-		day.startHour = WishDayHours.anyhours[0]
-		day.endHour = WishDayHours.anyhours[0]
-	elif WishDayHours.checkOff(text):
-		day.startHour = WishDayHours.off[0]
-		day.endHour = WishDayHours.off[0]
-
-	return day
-
-def getWishDaysFromText(text):
-	text = [x.strip("\n") for x in text.split("\n")]
-
-	nextWeekWords = ["на следующую", "на след", "след", "следующую"]
-	isNextWeek = len([x for x in text[0].split() if x.lower() in nextWeekWords]) > 0
-
-	wish = Wish()
-	wish.weekStart = getNextTue() if isNextWeek else getCurTue()
-
-	i = 1
-	d = 0
-	while i < len(text) and d < 7:
-		if text[i]:	
-			wish.days.append(getDayHoursFromString(text[i]))		
-			d += 1
-
-		i += 1
-
-	wish.comment = "\n".join(text[i:])
-
-	return wish 
+	return wish, isOverwritten
 
 def getTestWish():
 	with open("ws", "r", encoding="utf-8") as f:
 		return f.read()
-
-def addWish(name, uid, text):
-	print("Adding wish of {0} ({1})".format(name, str(uid)))
-
-	wish = getWishDaysFromText(text)
-	wish.name = name
-	wish.uid = uid
-	
-	wishes.append(wish)
-	saveWishes(wishPath, wishes)
-
-	return wish
-
-def getWishes(uid = -1, weekStart = None):
-	if weekStart is None:
-		weekStart = getCurTue()
-
-	filtered = [x for x in wishes if x.weekStart == weekStart]
-
-	if uid > 0:
-		filtered = [x for x in filtered if x.uid == uid]
-
-	return filtered
 
 def addFakeWishes(count):
 	print("Adding %s fake wishes" % count)

@@ -4,9 +4,10 @@ import vkapi
 
 def addWish(uid, body):
 	name = vkapi.getName(uid)   
-	newWish = wish.addWish(name, uid, body)
+	newWish, isOverwritten = wish.addWish(name, uid, body)
 
-	message = "Твои пожелания записаны :)\n" + str(newWish)
+	message = "Твои пожелания записаны :)\n" if isOverwritten is False else "Твои пожелания перезаписаны :)\n"
+	message += str(newWish)
 
 	return message, ''
 
