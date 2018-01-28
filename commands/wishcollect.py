@@ -1,9 +1,11 @@
 import command_system
 import wish
 import vkapi
+import utils
 
 def addWish(uid, body):
 	name = vkapi.getName(uid)   
+	date = 
 	newWish, isOverwritten = wish.addWish(name, uid, body)
 
 	message = "Твои пожелания записаны :)\n" if isOverwritten is False else "Твои пожелания перезаписаны :)\n"

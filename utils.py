@@ -27,7 +27,10 @@ def getDateFromText(text):
 
 def checkWordsInText(text, words):
 	# Lower all words
-	text = [w.lower() for w in text.split(" ")]
+	textlines = text.split("\n")
+	textfrags = []
+	[textfrags.extend(l.split(" ")) for l in textlines]
+	text = [w.lower() for w in textfrags]
 	words = [w.lower() for w in words]
 
 	for w in words:

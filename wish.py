@@ -121,7 +121,7 @@ def saveWishes(path, wishes):
 		if e == FileNotFoundError:
 			open(path, 'w+')
 
-def addWish(name, uid, text, date = None):
+def addWish(name, uid, text, date):
 	print("Adding wish of {0} ({1})".format(name, str(uid)))
 
 	wish = Wish(name, uid, date, text)
