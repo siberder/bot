@@ -36,7 +36,7 @@ def remindWishes():
 def startSchedule():
 	print("Starting schedule..")
 	schedule.every(1).minutes.do(remindWishes)
-	schedule.every().day.at("10:30").do(remindWishes)
+	#schedule.every().day.at("10:30").do(remindWishes)
 
 	while True:
 		schedule.run_pending()
