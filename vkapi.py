@@ -2,6 +2,7 @@ import vk
 import random
 import requests
 import settings
+import time
 
 session = vk.Session()
 api = vk.API(session, v=5.0)
@@ -32,6 +33,33 @@ def upload_document(user_id, document):
 def send_message(user_id, token, message, attachment=""):
     api.messages.send(access_token=token, user_id=str(user_id), message=message, attachment=attachment)
 
+def send_many_msgs(user_ids, token, message, attachment=""):
+	usercount = len(user_ids)
+
+	maxMsgs = 25
+	requestTpl = "https://api.vk.com/method/messages.send?access_token={token}&user_id={uid}&message={message}&v=5.71"
+
+	script = "return {0};"
+	sbody = ""
+
+	response = []
+	for i, user in enumerate(user_ids):
+		sbody += requestTpl.format(token=token, uid=user, message=message)
+		sbody += " +" if i + 1 < len(usercount) else ""
+
+		if i - 1 >= maxMsgs:
+			response.append(api.execute(code=script.format(sbody)))
+			sbody = ""
+			time.sleep(0.4)
+
+	return response
+
 def getName(uid):
 	data = api.users.get(user_id=uid, lang="ru")[0]
 	return data["first_name"] + " " + data["last_name"]
+
+def packName(uid, name):
+	return "@id{0} ({1})".format(uid, name)
+
+def getGroupMembers():
+	return api.groups.getMembers(access_token=settings.token, group_id=settings.group_id)["users"]

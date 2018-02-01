@@ -1,4 +1,4 @@
-from weasyprint import HTML, CSS
+# from weasyprint import HTML, CSS
 from yattag import Doc
 import datetime
 
@@ -96,11 +96,11 @@ class WishReport:
 
 		path = 'wishes.pdf'.format(self.getDateStr())
 		
-		html = HTML(string=self.htmlstring)
-		style = CSS(filename='style.css')
-		html.write_pdf(path, stylesheets=[style])
-		return open(path, "rb")
-		# return "itspdf"
+		# html = HTML(string=self.htmlstring)
+		# style = CSS(filename='style.css')
+		# html.write_pdf(path, stylesheets=[style])
+		# return open(path, "rb")
+		return "itspdf"
 
 	def reportPDF(self):
 		print("Generating report PDF..")

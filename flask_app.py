@@ -4,6 +4,7 @@
 from flask import Flask, request, json
 from settings import *
 import messageHandler
+import wishreminder
 
 app = Flask(__name__)
 
