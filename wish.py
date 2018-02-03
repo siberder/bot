@@ -148,6 +148,6 @@ def addFakeWishes(count):
 	for x in range(0, count):
 		addWish("Name Surname", count, getTestWish())	
 
-wishPath = "wishes.json"
+wishPath = settings.wishesPath
 
 wishes = loadWishes(wishPath)

@@ -22,7 +22,6 @@ def getRemindMembers():
 
 def getUsersWithoutWishes():
 	report = wishreporter.getWishesReport(wish.wishes, wishreporter.WishFilterSettings(date = utils.getCurTue()))
-	report.wishes = []
 
 	userWithWishes = [u.uid for u in report.wishes]
 	print("Users with wishes: " + str(userWithWishes))

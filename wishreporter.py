@@ -1,5 +1,3 @@
-from weasyprint import HTML, CSS
-from yattag import Doc
 import datetime
 
 class WishFilterSettings:
@@ -31,6 +29,7 @@ class WishReport:
 
 	def generateWishesHTML(self):
 		print("Generating wishes HTML..")
+		from yattag import Doc
 
 		doc, tag, text = Doc().tagtext()
 
@@ -93,6 +92,7 @@ class WishReport:
 
 	def generateWishesPDF(self):
 		print("Generating wishes PDF, html string length: " + str(len(self.htmlstring)))
+		from weasyprint import HTML, CSS
 
 		path = 'wishes.pdf'.format(self.getDateStr())
 		
