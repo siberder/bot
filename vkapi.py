@@ -37,7 +37,7 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 	usercount = len(user_ids)
 
 	maxMsgs = 25
-	requestTpl = "https://api.vk.com/method/messages.send?access_token={token}&user_id={uid}&message={message}&v=5.71"
+	requestTpl = 'API.messages.send({"access_token":"{token}", "user_id":"{uid}", "message":"{message}", "v":"5.71"})'
 
 	script = "return {0};"
 	sbody = ""
