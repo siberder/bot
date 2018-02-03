@@ -55,7 +55,7 @@ def getCurTue():
 	return getExactWeekStart(curdate)
 
 def getCurDatetimeString():
-	return date.today().strftime("%d.%m.%Y %H:%M:%S")
+	return datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
 def getExactWeekStart(curdate):
 	date = curdate + timedelta(days = - curdate.weekday() + settings.wishesStartWeekday)

@@ -54,7 +54,7 @@ def autoRemindWishes():
 
 	print("Reminding to %s people to left wishes." % len(usersWithoutWishes))
 
-	msg = settings.remindMsg.format(date=str(utils.getCurTue()))
+	msg = settings.remindMsg.format(date=str(utils.getCurTue().strftime("%d.%m.%Y")))
 
 	vkapi.send_many_msgs(usersWithoutWishes, settings.token, msg)
 
