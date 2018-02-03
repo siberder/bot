@@ -45,7 +45,7 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 	response = []
 	for i, user in enumerate(user_ids):
 		sbody += requestTpl.format(token=token, uid=user, message=message)
-		sbody += " +" if i + 1 < len(usercount) else ""
+		sbody += " +" if i + 1 < usercount else ""
 
 		if i - 1 >= maxMsgs:
 			response.append(api.execute(code=script.format(sbody)))
