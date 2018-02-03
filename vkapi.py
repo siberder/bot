@@ -48,11 +48,12 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 		sbody += " +" if i + 1 < usercount else ""
 
 		if i - 1 >= maxMsgs:
-			response.append(api.execute(code=script.format(sbody)))
+			response.append(api.execute(code=script.format(sbody), access_token=settings.token))
 			sbody = ""
 			time.sleep(0.4)
 
-	response.append(api.execute(code=script.format(sbody)))
+	print(script.format(sbody))
+	response.append(api.execute(code=script.format(sbody), access_token=settings.token))
 
 	print("Response of sending messages:")
 	print(response)
