@@ -1,4 +1,5 @@
 import wishreporter
+import jsonpickle
 import vkapi
 import settings
 import utils
@@ -14,6 +15,8 @@ def loadWishes():
 		if e == FileNotFoundError:
 			open(settings.wishesPath, 'w+')
 
+		print("No wishes loaded")
+		print(e)
 		return []
 
 def getRemindMembers():
