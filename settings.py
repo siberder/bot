@@ -8,6 +8,6 @@ ignoreids = [33351327]
 wishesStartWeekday = 1
 wishesDeadlineWeekday = 3
 
-remindMsg = "Please, leave your wishes on {date}! Write them to me, please"
-# remindMsg = "У тебя не оставлены пожелания на {date}!\n Напиши их мне, пожалуйста"
+# remindMsg = "Please, leave your wishes on {date}! Write them to me, please"
+remindMsg = "У тебя не оставлены пожелания на {date}! Напиши их мне, пожалуйста"
 #vkapi.send_many_msgs([53635578], "7aa98202ff3d3c4e8f83c987079056eb16874239d68ddc5b9d9a5370e47196568f33a3c6439aed67ed5d6", "message", attachment="")
