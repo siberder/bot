@@ -52,6 +52,8 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 			sbody = ""
 			time.sleep(0.4)
 
+	response.append(api.execute(code=script.format(sbody)))
+
 	print("Response of sending messages:")
 	print(response)
 	return response
