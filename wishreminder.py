@@ -21,6 +21,7 @@ def getRemindMembers():
 
 def getUsersWithoutWishes():
 	report = wishreporter.getWishesReport(wish.wishes, wishreporter.WishFilterSettings(date = utils.getCurTue()))
+	report.wishes = []
 
 	userWithWishes = [u.uid for u in report.wishes]
 	print("Users with wishes: " + str(userWithWishes))
@@ -55,9 +56,21 @@ def startSchedule():
 	while True:
 		print("Schedule checked")
 		schedule.run_pending()
-		time.sleep(1)
+		time.sleep(30)
 		print("Schedule check end")
 
 t = threading.Thread(target=startSchedule)
 t.daemon = True
 t.start()
+
+# def startshed():
+#     schedule.every(1).seconds.do(schedfunc)
+#     for x in range(0, 3):
+#             schedule.run_pending()
+#             time.sleep(1)
+#             print("Cycled")
+#             return
+
+# t = threading.Thread(target=startshed)
+# t.daemon = True
+# t.start()
