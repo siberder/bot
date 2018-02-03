@@ -50,8 +50,8 @@ def remindWishes():
 
 def startSchedule():
 	print("Starting schedule..")
-	schedule.every(1).minutes.do(remindWishes)
-	#schedule.every().day.at("10:30").do(remindWishes)
+	#schedule.every(1).minutes.do(remindWishes)
+	schedule.every().day.at("10:30").do(remindWishes)
 
 	while True:
 		print("Schedule checked")
@@ -62,15 +62,3 @@ def startSchedule():
 t = threading.Thread(target=startSchedule)
 t.daemon = True
 t.start()
-
-# def startshed():
-#     schedule.every(1).seconds.do(schedfunc)
-#     for x in range(0, 3):
-#             schedule.run_pending()
-#             time.sleep(1)
-#             print("Cycled")
-#             return
-
-# t = threading.Thread(target=startshed)
-# t.daemon = True
-# t.start()
