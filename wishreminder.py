@@ -56,6 +56,7 @@ def startSchedule():
 		print("Schedule checked")
 		schedule.run_pending()
 		time.sleep(1)
+		print("Schedule check end")
 
 t = threading.Thread(target=startSchedule)
 t.daemon = True
