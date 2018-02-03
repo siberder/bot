@@ -54,7 +54,7 @@ def startSchedule():
 
 	while True:
 		schedule.run_pending()
-		time.sleep(60)
+		time.sleep(1)
 
 t = threading.Thread(target=startSchedule)
 t.daemon = True
