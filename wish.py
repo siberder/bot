@@ -68,7 +68,7 @@ class Wish:
 			self.setFromText(text) 
 
 	def __str__(self):
-		pstr = "Пожелания от {0} с {1:%m-%d-%Y} по {2:%m-%d-%Y}\n".format(self.name, self.weekStart, self.weekStart + datetime.timedelta(days = 7))
+		pstr = "Пожелания от {0} с {1:%d-%m-%Y} по {2:%d-%m-%Y}\n".format(self.name, self.weekStart, self.weekStart + datetime.timedelta(days = 7))
 		
 		for i, day in enumerate(self.days):
 			pstr += "[{0:%d-%m}] {1}\n".format(day.date, day)

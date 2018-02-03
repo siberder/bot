@@ -25,6 +25,8 @@ def getWishes(uid, body):
 	wishesDate = utils.getDateFromText(body)
 	if wishesDate is None:
 		wishesDate = utils.getCurTue()
+	else:
+		wishesDate = utils.getExactWeekStart(wishesDate)
 
 	if foundWishesWords:
 		wreport = wishreporter.getWishesReport(wish.wishes, wishreporter.WishFilterSettings(date = wishesDate))
@@ -46,7 +48,7 @@ def getWishes(uid, body):
 		attachment = ''
 
 		if wishesDoc is None:
-			message += "\nЧто-то пошло не так, и документ с пожеланиями не сохранился. Спросите у Влада. Или Господа-бога. Хотя какая разница."
+			message += "\nЧто-то пошло не так, и документ с пожеланиями не сохранился. Спросите у Влада.."
 		else:
 			attachment = vkapi.upload_document(uid, wishesDoc)
 

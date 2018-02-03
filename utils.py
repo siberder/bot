@@ -39,10 +39,12 @@ def checkWordsInText(text, words):
 
 	return None
 
+# Gets next wish day
 def getNextTue():
 	curTue = getCurTue()
 	return curTue + timedelta(days = 7 - curTue.weekday()  + settings.wishesStartWeekday) # days in week - current day in week + tuesday
 
+# Gets current wish day
 def getCurTue():
 	curdate = date.today()
 
@@ -54,9 +56,10 @@ def getCurTue():
 
 	return getExactWeekStart(curdate)
 
-def getCurDatetimeString():
-	return datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-
+# Gets current week start of the date
 def getExactWeekStart(curdate):
 	date = curdate + timedelta(days = - curdate.weekday() + settings.wishesStartWeekday)
 	return date # days in week - current day in week + tuesday
+
+def getCurDatetimeString():
+	return datetime.now().strftime("%d.%m.%Y %H:%M:%S")
