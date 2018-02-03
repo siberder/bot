@@ -5,6 +5,7 @@ import vkapi
 import schedule
 import time
 import utils
+import threading
 
 def getRemindMembers():
 	groupMembers = vkapi.getGroupMembers()
@@ -34,6 +35,7 @@ def getUsersWithoutWishes():
 	return usersWithoutWishes
 
 def remindWishes():
+	print("Reminding on " + utils.getCurDatetimeString())
 	print("Getting users with no current wishes..")
 	usersWithoutWishes =  getUsersWithoutWishes()
 
@@ -54,4 +56,6 @@ def startSchedule():
 		schedule.run_pending()
 		time.sleep(60)
 
-#startSchedule()
+t = threading.Thread(target=startSchedule)
+t.daemon = True
+t.start()
