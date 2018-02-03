@@ -37,7 +37,7 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 	usercount = len(user_ids)
 
 	maxMsgs = 25
-	requestTpl = 'API.messages.send({"access_token":"{token}", "user_id":"{uid}", "message":"{message}", "v":"5.71"})'
+	requestTpl = 'API.messages.send({{"access_token":"{token}", "user_id":"{uid}", "message":"{message}", "v":"5.71"}})'
 
 	script = "return {0};"
 	sbody = ""
@@ -48,12 +48,12 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 		sbody += " +" if i + 1 < usercount else ""
 
 		if i - 1 >= maxMsgs:
-			response.append(api.execute(code=script.format(sbody), access_token=settings.token))
+			response.append(api.execute(code=script.format(sbody), access_token=token))
 			sbody = ""
 			time.sleep(0.4)
 
 	print(script.format(sbody))
-	response.append(api.execute(code=script.format(sbody), access_token=settings.token))
+	response.append(api.execute(code=script.format(sbody), access_token=token))
 
 	print("Response of sending messages:")
 	print(response)
