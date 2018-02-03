@@ -62,8 +62,9 @@ def autoRemindWishes():
 
 if __name__ == "__main__":
 	print(str(sys.argv))
-	
+
 	import os
+	os.chdir(os.path.dirname(__file__))
 	print("Running at " + str(os.path.dirname(os.path.abspath(__file__))))
 	print("Working dir at " + str(os.getcwd()))
 
