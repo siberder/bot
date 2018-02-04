@@ -28,7 +28,7 @@ def damerau_levenshtein_distance(s1, s2):
 	return d[lenstr1 - 1, lenstr2 - 1]
 
 def load_modules():
-	files = os.listdir("mysite/commands")
+	files = os.listdir("commands")
 	modules = filter(lambda x: x.endswith('.py'), files)
 	for m in modules:
 		 importlib.import_module("commands." + m[0:-3])
