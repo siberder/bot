@@ -70,10 +70,14 @@ class Wish:
 	def __str__(self):
 		pstr = "Пожелания от {0} с {1:%d-%m-%Y} по {2:%d-%m-%Y}\n".format(self.name, self.weekStart, self.weekStart + datetime.timedelta(days = 7))
 		
-		for i, day in enumerate(self.days):
-			pstr += "[{0:%d-%m}] {1}\n".format(day.date, day)
+		if len(self.days) > 0:
+			for i, day in enumerate(self.days):
+				pstr += "[{0:%d-%m}] {1}\n".format(day.date, day)
 
-		pstr += "\nКомментарий:\n" + self.comment if self.comment else ""
+			pstr += "\nКомментарий:\n" + self.comment if self.comment else ""
+		else:
+			pstr += "\nПожеланий нет."
+			
 		return pstr	
 
 	def setWeekStart(self, date, text):
@@ -100,6 +104,7 @@ class Wish:
 			i += 1
 
 		self.comment = "\n".join(text[i:])
+
 
 def loadWishes(path):
 	try:

@@ -66,5 +66,9 @@ def getName(uid):
 def packName(uid, name):
 	return "@id{0} ({1})".format(uid, name)
 
+def packIDsToNames(uids):
+	names = api.users.get(user_ids=uids, access_token=settings.token)
+	return [packName(name['id'], name["first_name"] + " " + name["last_name"]) for name in names]
+
 def getGroupMembers():
 	return api.groups.getMembers(access_token=settings.token, group_id=settings.group_id)["users"]

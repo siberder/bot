@@ -10,6 +10,7 @@ ignoreids = [33351327]
 wishesStartWeekday = 1
 wishesDeadlineWeekday = 3
 
+nextWeekWords = ["на следующую", "на след", "след", "следующую"]
 # remindMsg = "Please, leave your wishes on {date}! Write them to me, please"
 remindMsg = "У тебя не оставлены пожелания на {date}! Напиши их мне, пожалуйста"
 

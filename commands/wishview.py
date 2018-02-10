@@ -1,5 +1,6 @@
 import command_system
 import wish
+import wishreminder
 import wishreporter
 import vkapi
 import utils
@@ -56,7 +57,15 @@ def getWishes(uid, body):
 
 
 	if foundLeftsWords:
-		return "Функция в разработке", ''
+		withouWishesNames = vkapi.packIDsToNames(wishreminder.getUsersWithoutWishes())
+
+		msg = "Пожелания не оставили:"
+
+		for name in withouWishesNames:
+			msg += "\n" + name
+
+		return msg, ''
+
 	return 'Ошибка', ''
 
 command = command_system.Command()

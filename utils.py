@@ -4,8 +4,7 @@ from datetime import datetime, date, timedelta
 
 def getDateFromText(text):
 	try:
-		nextWeekWords = ["на следующую", "на след", "след", "следующую"]
-		isNextWeek = (checkWordsInText(text, nextWeekWords) is not None)
+		isNextWeek = (checkWordsInText(text, settings.nextWeekWords) is not None)
 
 		if isNextWeek:
 			return getNextTue()

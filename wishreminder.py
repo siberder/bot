@@ -5,8 +5,6 @@ import vkapi
 import schedule
 import time
 import utils
-import threading
-import sys
 
 def getRemindMembers():
 	groupMembers = vkapi.getGroupMembers()
@@ -58,9 +56,3 @@ def startSchedule():
 		schedule.run_pending()
 		time.sleep(30)
 		print("Schedule check end")
-
-if __name__ == "__main__":
-	print(str(sys.argv))
-	if sys.argv[1] == "-remind":
-		print("Reminding")
-		remindWishes()
