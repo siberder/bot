@@ -45,15 +45,19 @@ def send_many_msgs(user_ids, token, message, attachment=""):
 	response = []
 	for i, user in enumerate(user_ids):
 		sbody += requestTpl.format(token=token, uid=user, message=message)
-		sbody += " +" if i + 1 < usercount else ""
 
-		if i - 1 >= maxMsgs:
-			response.append(api.execute(code=script.format(sbody), access_token=token))
+		if i + 1 < usercount and i + 1 < maxMsgs:
+			sbody += " + "
+		else:
+			time.sleep(0.4)	# API Call delay
+			print("remind call..")
+
+			try:
+				response.append(api.execute(code=script.format(sbody), access_token=token))
+			except Exception as e:
+				print("Error sending many messages:" + str(e))
+
 			sbody = ""
-			time.sleep(0.4)
-
-	print(script.format(sbody))
-	response.append(api.execute(code=script.format(sbody), access_token=token))
 
 	print("Response of sending messages:")
 	print(response)
