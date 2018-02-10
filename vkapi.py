@@ -76,7 +76,7 @@ def getGroupMembers(filter = ""):
 def getIgnores():
 	print("Getting ignore ids..")
 	try:
-		managers = getManagers(filter="managers")
+		managers = getGroupMembers(filter="managers")
 
 		ignoreids = [x['id'] for x in managers if x['role'] is not "editor"]
 
