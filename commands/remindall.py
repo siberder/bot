@@ -3,7 +3,7 @@ import wishreminder
 import settings
 
 def remind(uid, body):
-	if uid not in settings.ignoreids
+	if uid not in settings.ignoreids:
 		return "Вы не администратор, чтобы вызывать эту функцию", ""
 
 	wishreminder.remindWishes()
