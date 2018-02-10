@@ -75,3 +75,20 @@ def getGroupMembers():
 
 def getManagers():
 	return vkapi.api.groups.getMembers(access_token=token, group_id=group_id, filter="managers")['users']
+
+def getIgnores():
+	print("Getting ignore ids..")
+	try:
+		managers = getManagers()
+
+		ignoreids = [x['id'] for x in managers if x['role'] is not "editor"]
+
+		print("Ignoring: " + str(ignoreids))
+
+		return ignoreids
+	except Exception as e:
+		print(e)
+		return []
+
+if settings.ignoreManagers:
+	settings.ignoreids.extend(getIgnores())
