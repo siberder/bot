@@ -17,12 +17,15 @@ remindMsg = "У тебя не оставлены пожелания на {date}!
 dateFromat = ""
 
 def getIgnores():
+	print("Getting ignore ids..")
 	try:
 		import vkapi
 
 		managers = vkapi.getManagers()
 
 		ignoreids = [x['id'] for x in managers if x['role'] is not "editor"]
+
+		print("Ignoring: " + str(ignoreids))
 
 		return ignoreids
 	except Exception as e:
