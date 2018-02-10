@@ -70,16 +70,13 @@ def packIDsToNames(uids):
 	names = api.users.get(user_ids=uids, access_token=settings.token)
 	return [packName(name['id'], name["first_name"] + " " + name["last_name"]) for name in names]
 
-def getGroupMembers():
-	return api.groups.getMembers(access_token=settings.token, group_id=settings.group_id)["users"]
-
-def getManagers():
-	return api.groups.getMembers(access_token=token, group_id=group_id, filter="managers")['users']
+def getGroupMembers(filter = ""):
+	return api.groups.getMembers(access_token=settings.token, group_id=settings.group_id, filter=filter)["users"]
 
 def getIgnores():
 	print("Getting ignore ids..")
 	try:
-		managers = getManagers()
+		managers = getManagers(filter="managers")
 
 		ignoreids = [x['id'] for x in managers if x['role'] is not "editor"]
 
