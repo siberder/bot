@@ -72,3 +72,6 @@ def packIDsToNames(uids):
 
 def getGroupMembers():
 	return api.groups.getMembers(access_token=settings.token, group_id=settings.group_id)["users"]
+
+def getManagers():
+	return vkapi.api.groups.getMembers(access_token=token, group_id=group_id, filter="managers")['users']
