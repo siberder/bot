@@ -4,4 +4,4 @@
 2. Делать отчет о пожеланиях в PDF-формате
 3. Напоминать людям, неоставившим пожелания, оставить их
 
-Бот является форком[https://github.com/strorinWind/bot], автор основы - storinWind[https://github.com/strorinWind]
+Бот является [форком](https://github.com/strorinWind/bot), автор основы - [storinWind](https://github.com/strorinWind)
