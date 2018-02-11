@@ -38,7 +38,7 @@ def get_answer(user_id, body):
 	message = "Прости, не понимаю тебя. Напиши 'помощь', чтобы узнать мои команды"
 	attachment = ''
 	print("Message from: %s Text: %s" % (str(user_id), str(body)))
-	cword = body.lstrip().split(" ")[0].lstrip()
+	cword = body.lstrip().split("\n")[0].split(" ")[0].lstrip()
 	#cword = body.split(" ")[0]
 	print("Control word: " + cword)
 	distance = len(cword)
