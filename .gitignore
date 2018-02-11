@@ -3,4 +3,5 @@ settings.py
 login.py
 testpasser.py
 wishgenerator.py
-*.json
+ws
+wishes.*
