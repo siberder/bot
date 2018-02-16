@@ -22,7 +22,7 @@ class WishReport:
 		if filter.uid > 0:
 			allwishes = [x for x in filtered if x.uid == filter.uid]
 
-		self.wishes = allwishes
+		self.wishes = allwishes.sort(key=lambda x: x.name)
 
 	def getDateStr(self):
 		return self.date.strftime("%d.%m.%Y") if self.date is not None else ""
