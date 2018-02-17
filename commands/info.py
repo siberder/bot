@@ -4,7 +4,8 @@ import command_system
 def info(uid, body):
     message = ''
     for c in command_system.command_list:
-        message += c.keys[0] + ' - ' + c.description + '\n'
+    	if c.showInfo:
+        	message += c.keys[0] + ' - ' + c.description + '\n'
     return message, ''
 
 

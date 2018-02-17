@@ -4,6 +4,7 @@ import vkapi
 import settings
 import utils
 import sys
+from datetime import datetime, timedelta
 
 def loadWishes():
 	try:
@@ -54,7 +55,8 @@ def autoRemindWishes():
 
 	print("Reminding to %s people to left wishes." % len(usersWithoutWishes))
 
-	msg = settings.remindMsg.format(date=str(utils.getCurTue().strftime("%d.%m.%Y")))
+	curTue = utils.getCurTue()
+	msg = settings.remindMsg.format(date=str(curTue.strftime("%d.%m.%Y")), enddate=str((curTue + timedelta(days = 7)).strftime("%d.%m.%Y")))
 
 	vkapi.send_many_msgs(usersWithoutWishes, settings.token, msg)
 
